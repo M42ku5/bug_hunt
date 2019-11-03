@@ -388,7 +388,7 @@ function showForecast() {
 
 function requestWeatherInfo(posLaLo) {
   var xhr = new XMLHttpRequest();
-  var myID = '8b57c54ba3389040f466c72a01465720/';
+  var myID = '/';
   xhr.open('GET', proxyForCors + 'https://api.darksky.net/forecast/' + myID + posLaLo + '?lang=de', true);
   xhr.send();
 
