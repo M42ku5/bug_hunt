@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Bug Hunt ist ein unterhaltsames Spiel, das auf JavaScript basiert und in einem aktuellen Webbrowser gespielt werden kann.">
+    <meta name="keywords" content="Spiel, Casual Game, JavaScript, kurzweilig, unterhaltsam, Browserspiel">
+    <meta name="author" content="Markus Schmieder">
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>Bug Hunt von Markus Schmieder (JavaScript - Spiel)</title>
+</head>
+<body onload="initPage();">
+    <main>
+    <div id="all">
+
+        <section>
+        <div id="txt">Punkte: <span id="counter">0</span></div>
+        <div id="countdown">30s</div>
+        <div id="pointsalert"></div>
+        <div id="minuslayer"></div>
+        <div id="timestripe"></div>
+        <div id="bug1"></div>
+        <div id="bug2"></div>
+        <div id="closefullscreen"><i class="fas fa-compress"></i></div>
+        </section>
+
+        <section>
+        <div id="startscreen">
+            <h1 id="starttext">Willkommen bei Bug Hunt</h1>
+            <h3>von Markus Schmieder 
+                <a href="#" id="m">
+                    <svg width="24" height="12">
+                    <rect width="24" height="12" style="fill:none;stroke-width:2;stroke:#ddd" />
+                    <line x1="0" y1="0" x2="12" y2="6" style="stroke-width:2;stroke:#ddd" />
+                    <line x1="12" y1="6" x2="24" y2="0" style="stroke-width:2;stroke:#ddd" />
+                    inline SVG not supported by your browser
+                    </svg>
+                </a>
+            </h3>
+            <img class="preview" src="img/badbugs/1.png" alt="Fliege">
+            <img class="preview" src="img/badbugs/6.png" alt="Kakerlake erste Ansicht">
+            <img class="preview" src="img/badbugs/10.png" alt="Kakerlake zweite Ansicht">
+            <img class="preview" src="img/goodbug/3.png" alt="Marienkäfer">
+            <br>
+            Tippe in 30 Sekunden so viele Fliegen/Kakerlaken an wie möglich (+1 Punkt).
+            Tippe aber nicht auf Marienkäfer (-2 Punkte).<br>
+            Für daneben tippen gibt es -1 Punkt.<br>
+            Viel Spaß beim Spielen!<br>
+            <br>
+            Schwierigkeitsgrad (leicht = ohne Marienkäfer und langsamer Positionswechsel):<br>
+            <button type="button" class="btn" id="btn-easy">leicht</button>
+            <button type="button" class="btn" id="btn-normal">normal aktiviert</button><br>
+            <button type="button" class="btn" id="btn-start">Start</button><br>
+            <button type="button" class="btn" id="btn-changelog">Zeige Änderungshistorie</button>
+            <pre id="changelogarea"></pre>
+            <div>
+                Wettereffekte im Spiel basierend auf Deinem Standort verwenden?<br>
+                <button type="button" class="btn" id="btn-location">aktivieren / Daten erneut abfragen <i class="fas fa-crosshairs"></i></button>
+                <div id="error"></div>
+                <div id="geo">Die Standort-Ermittlung dauert ungewöhnlich lange und scheint nicht zur Verfügung zu stehen.<br>
+                    Wähle als Alternative Deine nächstgelegene Stadt aus:
+                        <select id="locationselector">
+                                <option value="" selected>Stadt auswählen:</option>
+                                <option value="0">Berlin</option>
+                                <option value="1">Bremen</option>
+                                <option value="2">Dortmund</option>
+                                <option value="3">Dresden</option>
+                                <option value="4">Duisburg</option>		
+                                <option value="5">Düsseldorf</option>
+                                <option value="6">Erfurt</option>
+                                <option value="7">Essen</option>
+                                <option value="8">Frankfurt am Main</option>
+                                <option value="9">Hamburg</option>
+                                <option value="10">Hannover</option>
+                                <option value="11">Kiel</option>
+                                <option value="12">Köln</option>
+                                <option value="13">Leipzig</option>
+                                <option value="14">Magdeburg</option>
+                                <option value="15">Mainz</option>
+                                <option value="16">Mülheim an der Ruhr</option>
+                                <option value="17">München</option>
+                                <option value="18">Nürnberg</option>
+                                <option value="19">Potsdam</option>
+                                <option value="20">Saarbrücken</option>
+                                <option value="21">Schwerin</option>
+                                <option value="22">Stuttgart</option>
+                                <option value="23">Wiesbaden</option>
+                        </select>
+                    <button type="button" id="btn-citydata">Wetterdaten laden</button>
+                </div>
+                <div id="cerror"></div>
+                <div id="cstatus">Heute gibt es bei Dir und im Spiel: <span id="cstatusinner"></span> <button id="btn-more">mehr Wetterdaten</button></div>
+                
+                <section id="forecast">
+                <div class="box">
+                        <div id="ctime"></div>
+                        <div id="ctemp"></div>
+                        <div id="cstatus2"></div>
+                        <div id="mintemp0"></div>
+                        <div id="maxtemp0"></div>
+                        <div id="todaysummary"></div>
+                    </div>
+        
+                    <div class="box">
+                        <div id="tomorrowtime"></div>
+                        <div id="mintemp1"></div>
+                        <div id="maxtemp1"></div>
+                        <div id="tomorrowstatus"></div>
+                        <div id="tomorrowsummary"></div>
+                        <div id="urltodatasource"></div>
+                    </div>
+                </section>
+
+                <br>
+                Oder Regenhintergründe manuell aktivieren:<br>
+                <button type="button" class="btn" id="btn-weather-on">an</button>
+                <button type="button" class="btn" id="btn-weather-off">aus</button>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div id="finalscreen">
+            <h2 id="endtext">Glückwunsch!</h2>
+            <br>
+            Du hast <span id="finalscore"></span> Punkte erreicht.<br>
+            <br>
+            Trefferquote: <span id="trefferquote"></span><br>
+            <br>
+            Deine gefangenen Insekten: <span id="result"></span><br>
+            <br>
+            <div id="motivation"></div>
+            <button type="button" id="btn-restart">Noch eine Runde spielen</button><br>
+            <img id="endimg" src="img/pokal.png" alt="Pokal">
+        </div>
+    </section>
+
+    </div>
+
+</main>
+
+<script src="scripts.js"></script>
+</body>
+</html>
